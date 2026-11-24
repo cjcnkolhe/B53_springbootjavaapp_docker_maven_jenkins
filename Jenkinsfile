@@ -6,8 +6,8 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git branch: 'main',
-                    url: 'https://github.com/USERNAME/REPOSITORY.git'
+                git branch: 'master',
+                    url: 'https://github.com/cjcnkolhe/B53_springbootjavaapp_docker_maven_jenkins.git'
             }
         }
 
@@ -28,7 +28,7 @@ pipeline {
                 sh '''
                     docker stop myapp || true
                     docker rm myapp || true
-                    docker run -d --name myapp -p 8081:8080 myapp:latest
+                    docker run -d --name myappcontainer -p 8081:8080 myapp:latest
                 '''
             }
         }
