@@ -1,19 +1,26 @@
-
 pipeline {
     agent any
+
+    tools {
+        jdk 'JDK17'
+        maven 'Maven'
+    }
 
     stages {
 
         stage('Checkout') {
             steps {
-                git branch: 'main',
-                    url: 'https://github.com/USERNAME/REPOSITORY.git'
+                git branch: 'master',
+                    url: 'https://github.com/cjcnkolhe/B53_springbootjavaapp_docker_maven_jenkins.git'
             }
         }
 
         stage('Build using Maven') {
             steps {
+                sh 'java -version'
+                sh 'mvn -version'
                 sh 'mvn clean package'
+            
             }
         }
 
@@ -26,9 +33,9 @@ pipeline {
         stage('Docker Run') {
             steps {
                 sh '''
-                    docker stop myapp || true
-                    docker rm myapp || true
-                    docker run -d --name myapp -p 8081:8080 myapp:latest
+                    docker stop myappcontainer || true
+                    docker rm myappcontainer || true
+                    docker run -d --name myappcontainer -p 8081:8080 myapp:latest
                 '''
             }
         }
